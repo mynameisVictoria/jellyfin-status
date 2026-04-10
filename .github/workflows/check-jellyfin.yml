@@ -1,8 +1,8 @@
-name: Check Jellyfin uptime
+name: Jellyfin uptime check
 
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "*/10 * * * *"  # every 10 min
   workflow_dispatch:
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Check Jellyfin
+      - name: Check server
         run: |
           URL="${{ secrets.JELLYFIN_URL }}"
 
@@ -28,12 +28,28 @@ jobs:
             STATUS="down"
           fi
 
-          echo "{\"status\": \"$STATUS\", \"code\": \"$HTTP_CODE\", \"checkedAt\": \"$(date -u)\"}" > status.json
+          # read existing data
+          MOVIES=$(jq '.movies' status.json)
+          SHOWS=$(jq '.shows' status.json)
+          EPISODES=$(jq '.episodes' status.json)
+          BOOKS=$(jq '.books' status.json)
 
-      - name: Commit result
+          # write updated file
+          cat <<EOF > status.json
+{
+  "status": "$STATUS",
+  "movies": $MOVIES,
+  "shows": $SHOWS,
+  "episodes": $EPISODES,
+  "books": $BOOKS,
+  "checkedAt": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+}
+EOF
+
+      - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add status.json
-          git commit -m "Update Jellyfin status" || exit 0
+          git commit -m "Update uptime status" || exit 0
           git push
