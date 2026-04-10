@@ -47,11 +47,41 @@
     <p>You don't have to use the actual client itself, but once more it is just a lot more reliable</p>
     <h1>Uptime and Site info</h1>
     <hr>
-    <p>SERVER STATUS: ONLINE</p>
+    <hr>
+
+    <p id="status">Loading...</p>
+
     <p>Current movie, show and book count:</p>
-    <p>Movies: 170 </p>
-    <p>Shows: 16 (581 episodes in total) </p>
-    <p>Books: 25</p>
+
+    <p id="movies"></p>
+    <p id="shows"></p>
+    <p id="books"></p>
+
+    <p id="updated"></p>
+
+    <hr>
+
+    <script>
+        fetch("status.json")
+            .then(r => r.json())
+            .then(data => {
+
+                document.getElementById("status").innerText =
+                    "SERVER STATUS: " + data.status.toUpperCase();
+
+                document.getElementById("movies").innerText =
+                    "Movies: " + data.movies;
+
+                document.getElementById("shows").innerText =
+                    "Shows: " + data.shows + " (" + data.episodes + " episodes total)";
+
+                document.getElementById("books").innerText =
+                    "Books: " + data.books;
+
+                document.getElementById("updated").innerText =
+                    "Last checked: " + data.checkedAt;
+            });
+    </script>
     <hr>
     <marquee direction="right" scrollamount="10"> NEW MOVIES SHOWS AND BOOKS ADDED!!!!!</marquee>
     <hr>
