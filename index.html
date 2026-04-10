@@ -26,72 +26,46 @@
 
 </head>
 <body>
-    <marquee direction="right" scrollamount="10"> WELCOME TO THE EXTREMELY LEGAL STREAMING SITE</marquee>
-    <h1>PLEASE REFRESH EACH TIME YOU ENTER THE PAGE</h1>
-    <hr>
-    <p>This is a website dedicated to my streaming site hosted on a server which I own!</p>
-    <p>The service I use to actually host them is <a href="https://jellyfin.org">Jellyfin.</a> </p>
-    <p>Date created: 10 APR 2026</p>
-    <p>You are visitor: 1337</p>
-    <hr>
-    <p> The site is currently at <a href="https://torismovies.org/">this link.</a> </p>
-    <p> You need a username and password given out by me to access it</p>
-    <p> If you want and account, then contact me, view below for information</p>
-    <p> Also contact me for any other issues please!</p>
-    <hr>
-    <h1>More info</h1>
-    <p>While there is a website you can use to view the movies</p>
-    <p>I recommend that you use the jellyfin app on your phone or pc</p>
-    <p>It is on the appstore and Google Play Store, if you wish to use it on pc </p>
-    <p>search up "jellyfin client" and download it</p>
-    <p>You don't have to use the actual client itself, but once more it is just a lot more reliable</p>
-    <h1>Uptime and Site info</h1>
-    <hr>
-    <hr>
+<marquee direction="right" scrollamount="10"> WELCOME TO THE EXTREMELY LEGAL STREAMING SITE</marquee>
+<h1>PLEASE REFRESH EACH TIME YOU ENTER THE PAGE</h1>
+<hr>
+<p>This is a website dedicated to my streaming site hosted on a server which I own!</p>
+<p>The service I use to actually host them is <a href="https://jellyfin.org">Jellyfin.</a> </p>
+<p>Date created: 10 APR 2026</p>
+<p>You are visitor: 1337</p>
+<hr>
+<p> The site is currently at <a href="https://torismovies.org/">this link.</a> </p>
+<p> You need a username and password given out by me to access it</p>
+<p> If you want and account, then contact me, view below for information</p>
+<p> Also contact me for any other issues please!</p>
+<hr>
+<h1>More info</h1>
+<p>While there is a website you can use to view the movies</p>
+<p>I recommend that you use the jellyfin app on your phone or pc</p>
+<p>It is on the appstore and Google Play Store, if you wish to use it on pc </p>
+<p>search up "jellyfin client" and download it</p>
+<p>You don't have to use the actual client itself, but once more it is just a lot more reliable</p>
+<h1>Uptime and Site info</h1>
 
-    <p id="status">Loading...</p>
-
-    <p>Current movie, show and book count:</p>
-
-    <p id="movies"></p>
-    <p id="shows"></p>
-    <p id="books"></p>
-
-    <p id="updated"></p>
-
-    <hr>
-
-    <script>
-        fetch("status.json?t=" + new Date().getTime())            
-            .then(r => r.json())
-            .then(data => {
-
-                document.getElementById("status").innerText =
-                    "SERVER STATUS: " + data.status.toUpperCase();
-
-                document.getElementById("movies").innerText =
-                    "Movies: " + data.movies;
-
-                document.getElementById("shows").innerText =
-                    "Shows: " + data.shows + " (" + data.episodes + " episodes total)";
-
-                document.getElementById("books").innerText =
-                    "Books: " + data.books;
-            });
-    </script>
-    <hr>
-    <marquee direction="right" scrollamount="10"> NEW MOVIES SHOWS AND BOOKS ADDED!!!!!</marquee>
-    <hr>
-    <p>Movies: Thirteen Lives (2022), Ex Machina (2015), Crazy Rich Asians (2018)</p>
-    <p>Shows: Silicon Valley (2014 - 2019) </p>
-    <p>Books: Nineteen Eighty-Four (1949), Project Hail Mary (2021) </p>
-    <hr>
-    <h1>Contact</h1>
-    <hr>
-    <p>Email: glassowater1@proton.me </p>
-    <p>Discord: victoria017427</p>
-    <hr>
-    <marquee behavior="alternate">BEST VIEWED IN NETSCAPE NAVIGATORRRRR </marquee>
+<hr>
+<p>SERVER STATUS: ONLINE</p>
+<p>Current movie, show and book count:</p>
+<p>Movies: 170 </p>
+<p>Shows: 17 (605 episodes in total) </p>
+<p>Books: 25</p>
+<hr>
+<marquee direction="right" scrollamount="10"> NEW MOVIES SHOWS AND BOOKS ADDED!!!!!</marquee>
+<hr>
+<p>Movies: Thirteen Lives (2022), Ex Machina (2015), Crazy Rich Asians (2018)</p>
+<p>Shows: Silicon Valley (2014 - 2019) </p>
+<p>Books: Nineteen Eighty-Four (1949), Project Hail Mary (2021) </p>
+<hr>
+<h1>Contact</h1>
+<hr>
+<p>Email: glassowater1@proton.me </p>
+<p>Discord: victoria017427</p>
+<hr>
+<marquee behavior="alternate">BEST VIEWED IN NETSCAPE NAVIGATORRRRR </marquee>
 
 </body>
 </html>
