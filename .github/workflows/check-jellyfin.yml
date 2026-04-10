@@ -2,7 +2,7 @@ name: Jellyfin uptime check
 
 on:
   schedule:
-    - cron: "*/10 * * * *"  # every 10 min
+    - cron: "*/10 * * * *"
   workflow_dispatch:
 
 jobs:
@@ -16,40 +16,41 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Check server
+      - name: Check server + update status.json
         run: |
+          set -e
+
           URL="${{ secrets.JELLYFIN_URL }}"
 
-          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$URL")
-
-          if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 500 ]; then
+          # Check if server is reachable
+          if curl -L --fail --max-time 10 "$URL" > /dev/null; then
             STATUS="up"
           else
             STATUS="down"
           fi
 
-          # read existing data
-          MOVIES=$(jq '.movies' status.json)
-          SHOWS=$(jq '.shows' status.json)
-          EPISODES=$(jq '.episodes' status.json)
-          BOOKS=$(jq '.books' status.json)
+          # Read existing values safely
+          MOVIES=$(jq -r '.movies' status.json)
+          SHOWS=$(jq -r '.shows' status.json)
+          EPISODES=$(jq -r '.episodes' status.json)
+          BOOKS=$(jq -r '.books' status.json)
 
-          # write updated file
-          cat <<EOF > status.json
-{
-  "status": "$STATUS",
-  "movies": $MOVIES,
-  "shows": $SHOWS,
-  "episodes": $EPISODES,
-  "books": $BOOKS,
-  "checkedAt": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-}
-EOF
+          # Write new JSON safely (NO heredoc, NO YAML traps)
+          echo "{
+            \"status\": \"$STATUS\",
+            \"movies\": $MOVIES,
+            \"shows\": $SHOWS,
+            \"episodes\": $EPISODES,
+            \"books\": $BOOKS
+          }" > status.json
 
       - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
           git add status.json
-          git commit -m "Update uptime status" || exit 0
+
+          git commit -m "Update Jellyfin status" || exit 0
+
           git push
