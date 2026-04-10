@@ -1,4 +1,4 @@
-name: Jellyfin uptime check
+name: Jellyfin uptime check v2
 
 on:
   schedule:
