@@ -62,7 +62,7 @@
     <hr>
 
     <script>
-        fetch("status.json")
+        fetch("status.json?t=" + new Date().getTime())            
             .then(r => r.json())
             .then(data => {
 
